@@ -56,3 +56,8 @@ primos x y = [x | x <- [x..y], ehPrimo x]
 --QUESTAO 08
 -- notasTroco :: Int -> [[Int]]
 notasTroco y = [x | x <- [1..45]]
+
+--QUESTAO 09
+mmc :: (Int, Int, Int) -> Int
+mmc (a, b, c)
+    | 
