@@ -48,7 +48,7 @@ ehPrimo x = divisores x == [1,x]
 
 divisores :: Int -> [Int]
 divisores 1 = [1]
-divisores x = 1:[ y | y <- [2..(x `div` 2)], x `mod` y == 0] ++ [x]
+divisores x = 1:[ y | y <- [2..(div x 2)], mod x y == 0] ++ [x]
 
 primos :: Int -> Int -> [Int]
 primos x y = [x | x <- [x..y], ehPrimo x]
@@ -58,6 +58,92 @@ primos x y = [x | x <- [x..y], ehPrimo x]
 notasTroco y = [x | x <- [1..45]]
 
 --QUESTAO 09
-mmc :: (Int, Int, Int) -> Int
-mmc (a, b, c)
-    | 
+mdc :: Int -> Int -> Int
+mdc a b
+    | a < b = mdc b a
+    | b == 0 = a
+    |otherwise = mdc b (mod a b)
+
+mmcBasico :: Int -> Int -> Int
+mmcBasico x y = div (x * y) (mdc x y)
+
+mmc :: Int -> Int -> Int -> Int
+mmc x y z = mmcBasico x (mmcBasico y z)
+
+--QUESTAO 11
+fizzbuzz n = [if mod x 15 == 0 then "FizzBuzz" 
+              else if mod x 3 == 0 then "Fizz" 
+              else if mod x 5 == 0 then "Buzz"
+              else show x | x <- [1..n]]
+
+--QUESTAO 12
+conta_ocorrencias :: Int -> [Int] -> Int
+conta_ocorrencias e [] = 0
+conta_ocorrencias e (x:y) | x == e = 1 + conta_ocorrencias e y
+                          | otherwise = conta_ocorrencias e y
+
+--QUESTAO 13
+unica_ocorrencia :: Int -> [Int] -> Bool
+unica_ocorrencia n list = if (conta_ocorrencias n list == 1)
+                         then True
+                         else False
+
+--QUESTAO 14
+intercala::[Int]->[Int]->[Int]
+intercala x [] = x
+intercala [] x = x
+intercala (a:x1) (b:y1) = a: b: intercala x1 y1
+
+--QUESTAO 15
+type Contato = ([Char],[Char],[Char],[Char])
+type Agenda = [Contato]
+
+listaContato :: Agenda
+listaContato = [("Jim","RJ","1234-5678","jim@dundermifflin.com"),
+                ("Michael","AM","1214-4546","jichael@dundermifflin.com"),
+                ("Dwight","DF","2448-7296","dwight@dundermifflin.com"),
+                ("Pamela","MG","1224-2412","pamela@dundermifflin.com"),
+                ("Andrew","SC","1235-7111","andrew@dundermifflin.com")]
+
+procuraNumero::[Char]->Agenda->[Char]
+procuraNumero x [] = "Telefone Desconhecido"
+procuraNumero x ((a,_,t,_):cs) | x == t = a                             
+                               | otherwise = procuraNumero x cs
+
+--QUESTAO 17
+{-insere ::(Ord a) => [a] -> [a]
+insere [] = []
+insere (x:b) = insere_ord1 x (insere b)
+
+insere_ord ::(Ord a) => Int -> [a] -> [a]
+insere_ord num [] = []
+insere_ord num (x:b) = num ++ [a] insere_ord1 x (insere_ord b)
+
+insere_ord1 :: (Ord a) => a -> [a] -> [a]
+insere_ord1 x [] = [x]
+insere_ord1 x (y:a)
+    | x <= y = (x:y:a)
+    | otherwise = y: (insere_ord1 x a)
+-}
+
+--QUESTAO 18
+reverte a = reverse a
+
+--QUESTAO 19
+sem_repetidos :: (Ord t) => [t] -> [t]
+sem_repetidos [] = []
+sem_repetidos [a]= [a]
+sem_repetidos (a:b:x)
+    | a == b = sem_repetidos (b:x)
+    | otherwise= a : sem_repetidos (b:x)
+
+--QUESTAO 20
+-- A resolucao dessa questao estara em um arquivo anexado e que sera enviado junto
+
+--QUESTAO 21
+conta_maior5 :: [Int] -> [Int]
+conta_maior5 [] = []
+conta_maior5 (a:t) = if a > 5 then a : conta_maior5 t
+                              else conta_maior5 t
+            
+--QUESTAO 22

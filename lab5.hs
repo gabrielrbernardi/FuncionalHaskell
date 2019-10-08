@@ -37,3 +37,5 @@ pertence ((x:xs), y) = if x == y then True else pertence (xs, y)
 --QUESTAO 10
 maior :: [Int] -> Int
 maior x = max x
+
+--QUESTAO 11
